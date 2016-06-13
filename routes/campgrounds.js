@@ -17,6 +17,7 @@ router.get("/", function(req, res){
 
 // CREATE - add new campground to DB
 router.post("/", middleware.isLoggedIn, function(req, res){
+    // get data from array
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
@@ -26,14 +27,13 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     };
     var newCampground = {name: name, image: image, description: desc, author: author};
     // Create new campground, save to DB
-    Campground.create(newCampground), function(err, newlyCreated){
+    Campground.create(newCampground, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
-            console.log(newlyCreated);
             res.redirect("/campgrounds");
         }
-    };
+    });
 });
 
 
